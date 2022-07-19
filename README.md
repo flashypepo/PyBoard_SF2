@@ -1,8 +1,9 @@
 # PyBoard_SF2
-experimental repository - experiments with PyBoard SF2Cancel changes
+## experimental repository - experiments with PyBoard SF2.
 
-main.py - main executable
-some lib-files as drivers.
+- main.py - main executable
+- some lib-files as drivers.
 
-Repository needs to sorted out soon.
+Note: repository needs to sorted out soon.
+
 Peter
