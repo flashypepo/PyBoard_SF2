@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
  demo_ws2812 - simple demo of an 8-stick Neopixel
- 
+
  Configuration:
  DIN = SPI(1) - MOSI (X8)  - WBUS128: W14
  Vcc = 5V
@@ -11,9 +11,9 @@
      from demo_ws2812 import run
     run()
 
- 2020-1222 PP adopted from demo_simple.py. 
+ 2020-1222 PP adopted from demo_simple.py.
  TODO: Pixels behave sometime odd, and seems not to be combined with main
- 
+
 """
 try:
     import pyb
@@ -71,15 +71,26 @@ def clear():
 def run(wait=1000):
     try:
         print("Neopixel demo...", stick.led_count, "neopixels")
+        mask = 0x3
         while True:
-            #data = solidColors()  # solid colors
-            #data = randomColors(stick.led_count) # random colors
-            data = randomLevel()  # random level and random colors
+            i = (pyb.rng() & mask)  # random demo
+            if i == 0:
+                print(f"Demo.. {i}")
+                data = solidColors()  # solid colors
+            elif i == 1:
+                print(f"Demo.. {i}")
+                data = randomColors(stick.led_count) # random colors
+            elif i == 2:
+                print(f"Demo.. {i}")
+                data = randomLevel()  # random level and random colors
+            else:
+                data = randomColors(stick.led_count) # random colors
+
             # DEBUG: print('data:', data)
             stick.show(data)
             pyb.delay(wait)
-            clear()
-            pyb.delay(wait // 4)
+            #clear()
+            #pyb.delay(wait // 4)
     #except Exception as ex:
     #    print(ex)
     #    pass
@@ -88,6 +99,53 @@ def run(wait=1000):
         print('Interrupted!')
         pass
 
+def demo_solidcolors(wait=1000):
+    try:
+        print(f"Demo solid colors for {stick.led_count} neopixels...")
+        while True:
+            data = solidColors()  # solid colors
+
+            stick.show(data)
+
+            pyb.delay(wait)
+            clear()
+            pyb.delay(wait // 4)
+
+    except KeyboardInterrupt:
+        clear()
+        print('Interrupted!')
+        pass
+
+
+def demo_randomcolors(wait=1000):
+    try:
+        print(f"Demo random colors for {stick.led_count} neopixels...")
+        while True:
+            data = randomColors(stick.led_count) # random colors
+            stick.show(data)
+            pyb.delay(wait)
+            clear()
+            pyb.delay(wait // 4)
+    except KeyboardInterrupt:
+        clear()
+        print('Interrupted!')
+        pass
+
+def demo_randomlevelcolors(wait=1000):
+    try:
+        print(f"Demo random colors for random number of neopixels...")
+        while True:
+            data = randomLevel()  # random level and random colors
+            stick.show(data)
+
+            pyb.delay(wait)
+            clear()
+            pyb.delay(wait // 4)
+
+    except KeyboardInterrupt:
+        clear()
+        print('Interrupted!')
+        pass
 
 
 if __name__ == "__main__":

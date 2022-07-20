@@ -48,7 +48,7 @@ if USE_WIFI is True:
         wl.config(antenna=USE_ANTENNA)  # 2021-1025 modified: 0 internal 1 external
         mac = wl.config('mac')   # get the MAC address
         # wl.config(txpower=value)  # In dbm
-        # wl.config(trace=value) # value can be a bit-wise or of 1=async-events, 2=eth-tx, 4=eth-rx. 
+        # wl.config(trace=value) # value can be a bit-wise or of 1=async-events, 2=eth-tx, 4=eth-rx.
         # So:
         #   wl.config(trace=7)  # To see everything.
         #   wl.config(trace=0)  # To stop
@@ -68,6 +68,11 @@ if USE_WIFI is True:
     print("Wifi connected:", wifi._wifi.isconnected())
     print(wifi._wifi.ifconfig())
     """
+    # 2022-0720 PP added helper for IP address
+    # Note: returns IP in text
+    def ip(wl):
+        return wl.ifconfig()[0]
+
 
 # 2020-1224 PP added SD-card
 if pyb.SDCard().present():
@@ -75,6 +80,18 @@ if pyb.SDCard().present():
     os.mount(pyb.SDCard(), '/sd')
     sys.path[1:1] = ['/sd', '/sd/lib']
     print("SD card added")
+
+# 2022-0720 PP added scan(i2c)
+# print I2C-bus devices in hex-value en decimal-value
+def print_i2cscan(i2c):
+    """
+    print_i2cscan: print the address attached to the I2C bus (hex and decimal values)
+    @param i2c - i2c-bus
+    """
+    devices = i2c.scan()
+    for device in devices:
+        print(f"device: {hex(device)}({device})")
+
 
 # 2022-0525 PP added power control
 def power_on():
