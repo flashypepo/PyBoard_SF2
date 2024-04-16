@@ -5,4 +5,4 @@ Updates 2024-04: building a local room air monitor system, using nanogui and asy
 This is **work-in-progress** including documentation.
 
 - experiments: contains various ad-hoc experiments
-- micropython_airmonitor_nanogui: local room air monitor (nanogui, asyncio)
+- airmonitor_nanogui: local room air monitor (nanogui, asyncio)
